@@ -31,4 +31,8 @@ router.get('/sku/:idItem', function(req, res, next) {
     });
 });
 
+router.get('/teste', function(req, res, next) {
+    res.json({ teste: 'teste' });
+});
+
 module.exports = router;
