@@ -31,8 +31,26 @@ router.get('/sku/:idItem', function(req, res, next) {
     });
 });
 
-router.get('/teste', function(req, res, next) {
-    res.json({ teste: 'teste' });
+router.get('/search/:nameItem', function(req, res, next) {
+    var nameSearch = req.params.nameItem;
+    console.log(nameSearch);
+    var url = "/v1/search?query=nameSearch&format=json&apiKey=key"
+        .replace('nameSearch', nameSearch)
+        .replace('key', staticStrings.apiKey());
+
+    http.get({ host: staticStrings.hostApi(), path: url }, function(response) {
+        var body = '';
+        response.on('data', function(data) {
+            body += data;
+        });
+
+        response.on('end', function() {
+            res.json(body);
+        });
+
+    }).on('error', function(data) {
+        console.log(data);
+    });
 });
 
 module.exports = router;
